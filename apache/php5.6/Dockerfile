@@ -24,15 +24,11 @@ RUN	wget https://getcomposer.org/composer.phar && \
 
 RUN a2enmod rewrite && \
 	a2enmod expires && \
-	rm -r /var/www/html && \
 	echo "date.timezone = Pacific/Auckland" > /etc/php5/apache2/conf.d/timezone.ini && \
 	echo "date.timezone = Pacific/Auckland" > /etc/php5/cli/conf.d/timezone.ini
 
-COPY ./conf/000-default.conf /etc/apache2/sites-available/000-default.conf
-# COPY ./conf/laravel.test.conf /etc/apache2/sites-available/laravel.test.conf
-# COPY ./conf/silverstripe.test.conf /etc/apache2/sites-available/silverstripe.test.conf
-RUN rm -f /etc/apache2/sites-enabled/*
-RUN ln -s /etc/apache2/sites-available/*.conf /etc/apache2/sites-enabled/
+RUN a2ensite 000-default.conf
+
 COPY ./bootstrap /usr/local/bin/bootstrap
 RUN chmod +x /usr/local/bin/bootstrap
 

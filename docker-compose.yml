@@ -11,7 +11,8 @@ services:
     environment:
       APP_ENV: dev
     volumes:
-      - ~/Dockerbase:/var/www
+      - ~/Dockerbase/codebase:/var/www
+      - ~/Dockerbase/server/apache/conf/sites-available:/etc/apache2/sites-available
     networks:
       - devnet
   mysql:

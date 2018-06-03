@@ -5,7 +5,7 @@ services:
       context: ./apache/php5.6
       dockerfile: Dockerfile
     image: dev:apache_php5.6
-    container_name: devapp
+    container_name: dev56
     ports:
       - "80:80"
     environment:
@@ -16,19 +16,18 @@ services:
       - devnet
   mysql:
     image: mysql:5.7
-    container_name: devdb
+    container_name: mysql57
     environment:
       MYSQL_ROOT_PASSWORD: "secret"
-      MYSQL_DATABASE: "develop"
     ports:
       - "3306:3306"
     volumes:
-      - devdb:/var/lib/mysql
+      - mysqldb:/var/lib/mysql
     networks:
       - devnet
 networks:
   devnet:
     driver: bridge
 volumes:
-  devdb:
+  mysqldb:
     driver: local

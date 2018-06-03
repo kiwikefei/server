@@ -29,8 +29,8 @@ RUN a2enmod rewrite && \
 	echo "date.timezone = Pacific/Auckland" > /etc/php5/cli/conf.d/timezone.ini
 
 COPY ./conf/000-default.conf /etc/apache2/sites-available/000-default.conf
-COPY ./conf/laravel.test.conf /etc/apache2/sites-available/laravel.test.conf
-COPY ./conf/silverstripe.test.conf /etc/apache2/sites-available/silverstripe.test.conf
+# COPY ./conf/laravel.test.conf /etc/apache2/sites-available/laravel.test.conf
+# COPY ./conf/silverstripe.test.conf /etc/apache2/sites-available/silverstripe.test.conf
 RUN rm -f /etc/apache2/sites-enabled/*
 RUN ln -s /etc/apache2/sites-available/*.conf /etc/apache2/sites-enabled/
 COPY ./bootstrap /usr/local/bin/bootstrap

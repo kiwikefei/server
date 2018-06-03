@@ -5,18 +5,18 @@ services:
       context: ./apache/php5.6
       dockerfile: Dockerfile
     image: dev:apache_php5.6
-    container_name: dev56
+    container_name: app
     ports:
       - "80:80"
     environment:
       APP_ENV: dev
     volumes:
-      - ~/Codebase/:/var/www
+      - ~/Dockerbase:/var/www
     networks:
       - devnet
   mysql:
     image: mysql:5.7
-    container_name: mysql57
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: "secret"
     ports:

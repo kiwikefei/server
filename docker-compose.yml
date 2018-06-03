@@ -1,0 +1,34 @@
+version: '2'
+services:
+  app:
+    build:
+      context: ./apache/php5.6
+      dockerfile: Dockerfile
+    image: dev:apache_php5.6
+    container_name: devapp
+    ports:
+      - "80:80"
+    environment:
+      APP_ENV: dev
+    volumes:
+      - ~/Codebase/:/var/www
+    networks:
+      - devnet
+  mysql:
+    image: mysql:5.7
+    container_name: devdb
+    environment:
+      MYSQL_ROOT_PASSWORD: "secret"
+      MYSQL_DATABASE: "develop"
+    ports:
+      - "3306:3306"
+    volumes:
+      - devdb:/var/lib/mysql
+    networks:
+      - devnet
+networks:
+  devnet:
+    driver: bridge
+volumes:
+  devdb:
+    driver: local

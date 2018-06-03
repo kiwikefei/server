@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+COMPOSE_FILE="$HOME/Codebase/server/docker-compose.yml"
+
+COMPOSE_COMMAND="docker-compose -f $COMPOSE_FILE"
+
+$COMPOSE_COMMAND run --rm \
+            app \
+            php framework/cli-script.php "$@"

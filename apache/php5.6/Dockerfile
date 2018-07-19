@@ -23,22 +23,19 @@ RUN apt-get -qqy install php5-xdebug
 RUN	wget https://getcomposer.org/composer.phar && \
 	chmod +x composer.phar && \
 	mv composer.phar /usr/local/bin/composer
-RUN echo 'zend_extension="$(find /usr/lib/php5/ -name xdebug.so)"' >> /etc/php5/cli/php.ini
-RUN echo 'xdebug.remote_enable=1' >> /etc/php5/cli/php.ini
-RUN echo 'xdebug.remote_handler=dbgp' >>  /etc/php5/cli/php.ini
-RUN echo 'xdebug.remote_port=9000' >> /etc/php5/cli/php.ini
-RUN echo 'xdebug.remote_autostart=1' >> /etc/php5/cli/php.ini
-RUN echo 'xdebug.remote_connect_back=0' >> /etc/php5/cli/php.ini
-RUN echo 'xdebug.idekey=dockerkey' >>  /etc/php5/cli/php.ini
-RUN echo 'xdebug.idekey=dockerkey' >>  /etc/php5/cli/php.ini
-RUN echo 'xdebug.remote_host=192.168.1.11' >>  /etc/php5/cli/php.ini
 
 RUN a2enmod rewrite && \
 	a2enmod expires && \
 	echo "date.timezone = Pacific/Auckland" > /etc/php5/apache2/conf.d/timezone.ini && \
 	echo "date.timezone = Pacific/Auckland" > /etc/php5/cli/conf.d/timezone.ini
 
+COPY arizto.test.conf /etc/apache2/sites-available/arizto.test.conf
+COPY xdebug.ini /etc/php5/mods-available/xdebug.ini
+
 RUN a2ensite 000-default.conf
+RUN a2ensite arizto.test.conf
+
+RUN service apache2 reload
 
 COPY ./bootstrap /usr/local/bin/bootstrap
 RUN chmod +x /usr/local/bin/bootstrap

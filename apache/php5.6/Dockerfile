@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get -qq update
 
 # essential packages 
-RUN apt-get -qqy install sudo wget lynx telnet vim curl make git-core locales bzip2 htop
+RUN apt-get -qqy install sudo wget lynx telnet vim curl make git-core locales bzip2 htop net-tools
 
 RUN echo "LANG=en_US.UTF-8\n" > /etc/default/locale && \
 	echo "en_US.UTF-8 UTF-8\n" > /etc/locale.gen && \
@@ -18,9 +18,20 @@ RUN apt-get -qqy install apache2 \
 	php5-cli libapache2-mod-php5 php5-mysqlnd \
     php5-mcrypt php5-tidy php5-curl php5-gd php-pear
 
+RUN apt-get -qqy install php5-xdebug 
+
 RUN	wget https://getcomposer.org/composer.phar && \
 	chmod +x composer.phar && \
 	mv composer.phar /usr/local/bin/composer
+RUN echo 'zend_extension="$(find /usr/lib/php5/ -name xdebug.so)"' >> /etc/php5/cli/php.ini
+RUN echo 'xdebug.remote_enable=1' >> /etc/php5/cli/php.ini
+RUN echo 'xdebug.remote_handler=dbgp' >>  /etc/php5/cli/php.ini
+RUN echo 'xdebug.remote_port=9000' >> /etc/php5/cli/php.ini
+RUN echo 'xdebug.remote_autostart=1' >> /etc/php5/cli/php.ini
+RUN echo 'xdebug.remote_connect_back=0' >> /etc/php5/cli/php.ini
+RUN echo 'xdebug.idekey=dockerkey' >>  /etc/php5/cli/php.ini
+RUN echo 'xdebug.idekey=dockerkey' >>  /etc/php5/cli/php.ini
+RUN echo 'xdebug.remote_host=192.168.1.11' >>  /etc/php5/cli/php.ini
 
 RUN a2enmod rewrite && \
 	a2enmod expires && \

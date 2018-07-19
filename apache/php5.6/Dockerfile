@@ -35,8 +35,6 @@ COPY xdebug.ini /etc/php5/mods-available/xdebug.ini
 RUN a2ensite 000-default.conf
 RUN a2ensite arizto.test.conf
 
-RUN service apache2 reload
-
 COPY ./bootstrap /usr/local/bin/bootstrap
 RUN chmod +x /usr/local/bin/bootstrap
 

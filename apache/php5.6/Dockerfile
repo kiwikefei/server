@@ -29,6 +29,9 @@ RUN a2enmod rewrite && \
 	echo "date.timezone = Pacific/Auckland" > /etc/php5/apache2/conf.d/timezone.ini && \
 	echo "date.timezone = Pacific/Auckland" > /etc/php5/cli/conf.d/timezone.ini
 
+RUN echo "upload_max_filesize = 10M;" >> /etc/php5/apache2/php.ini
+RUN echo "post_max_size = 10M;" >> /etc/php5/apache2/php.ini
+
 COPY arizto.test.conf /etc/apache2/sites-available/arizto.test.conf
 COPY xdebug.ini /etc/php5/mods-available/xdebug.ini
 
